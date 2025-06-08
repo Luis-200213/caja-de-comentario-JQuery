@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Comentarios Sharebook</title>
+  <link href="assets/bootstrap-5.3.6-dist/bootstrap-5.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+       background-color: #f0f2f5; 
+       font-family: Arial, sans-serif; 
+      }
+    .card {
+       background-color: rgb(243, 236, 228); 
+       box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+       }
+    .descripcion {
+       font-style: italic; 
+       margin: 0.5rem 2rem; 
+       color: #555; }
+    h1 {
+       color: #1877f2; 
+       font-weight: bold; 
+      }
+    .btn-primary { 
+      background-color: #1877f2; 
+      border-color: #1877f2;
+     }
+
+     
+  </style>
+</head>
+<body>
+
+<h1 class="text-center mb-4">Post con comentarios de Sharebook</h1>
+
+<div class="card mx-auto" style="max-width: 700px;">
+  <div class="text-center">
+    <img src="assets/img/evento-musical.jpg" class="img-fluid" style="width: 600px;">
+    <div class="descripcion">Depeche Mode: nuevo concierto en el Movistar Arena. Compra tus entradas en https://www.movistararena.cl/</div>
+  </div>
+  <div class="card-body">
+    <h5>Comentarios:</h5>
+    <div id="comentarios" class="mb-3"></div>
+
+    <div class="input-group mb-2">
+      <input type="text" id="usuario" class="form-control" placeholder="Usuario">
+      <input type="text" id="comentario" class="form-control" placeholder="Agrega un comentario...">
+      <button id="publicar" class="btn btn-primary">Publicar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  $('#publicar').click(function() {
+    let username = $('#usuario').val().trim();
+    let textcoment = $('#comentario').val().trim();
+
+    if (username && textcoment) {
+      let comentarionuevo = $(`
+        <div class="bg-light p-3 rounded mt-2 comentario" style="display:none">
+          <div class="d-flex justify-content-between">
+            <strong>${username}</strong>
+            <button class="btn btn-sm btn-outline-secondary borrar">Eliminar</button>
+          </div>
+          <p class="mt-2 mb-2">${textcoment}</p>
+          <button class="btn btn-sm btn-outline-success reaccion" >Me gusta</button>
+          <button class="btn btn-sm btn-outline-danger reaccion"  >No me gusta</button>
+        </div>
+      `);
+
+      $('#comentarios').append(comentarionuevo);
+      comentarionuevo.fadeIn(500);
+      $('#usuario, #comentario').val('');
+    } else {
+      alert("Por favor completa los dos campos.");
+    }
+  });
+
+  $(document).on('click', '.borrar', function() {
+    $(this).closest('.comentario').fadeOut(415, function() {
+      $(this).remove();
+    });
+  });
+
+  $(document).on('click', '.reaccion', function() {
+    $(this).fadeTo(415, 0.5).prop('disabled', true);
+  });
+</script>
+
+</body>
+</html>
